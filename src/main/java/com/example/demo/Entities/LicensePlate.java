@@ -1,12 +1,9 @@
-package com.example.demo.Entitiies;
+package com.example.demo.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import jdk.jfr.BooleanFlag;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -33,27 +30,26 @@ public class LicensePlate implements java.io.Serializable {
     @PastOrPresent
     private LocalDate earliestPossibleFirstRegistrationOfVehicle;
 
-    @PastOrPresent
-    private LocalDate datePurchased;
-
-
     //todo - delete attribute if not work
     // Owner attrubute will be assigned if the license plate is purchase, and will be blank otherwise
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Owner")
-    private Customer Owner;
+    private Customer owner;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Purchase.class, mappedBy = "licensePlate")
+    private Purchase purchaseDetails;
 
     public LicensePlate() {
 
     }
 
-    public LicensePlate(String licensePlateNumber, Double priceIncludingVatAndDvlaAssignmentFee, Boolean available, LocalDate earliestPossibleFirstRegistrationOfVehicle, LocalDate datePurchased, Customer owner) {
+    public LicensePlate(String licensePlateNumber, Double priceIncludingVatAndDvlaAssignmentFee, Boolean available, LocalDate earliestPossibleFirstRegistrationOfVehicle, Customer owner, Purchase purchaseDetails) {
         this.licensePlateNumber = licensePlateNumber;
         this.priceIncludingVatAndDvlaAssignmentFee = priceIncludingVatAndDvlaAssignmentFee;
         this.available = available;
         this.earliestPossibleFirstRegistrationOfVehicle = earliestPossibleFirstRegistrationOfVehicle;
-        this.datePurchased = datePurchased;
-        Owner = owner;
+        this.owner = owner;
+        this.purchaseDetails = purchaseDetails;
     }
 
     public Integer getLicensePlateId() {
@@ -96,19 +92,19 @@ public class LicensePlate implements java.io.Serializable {
         this.earliestPossibleFirstRegistrationOfVehicle = earliestPossibleFirstRegistrationOfVehicle;
     }
 
-    public LocalDate getDatePurchased() {
-        return datePurchased;
-    }
-
-    public void setDatePurchased(LocalDate datePurchased) {
-        this.datePurchased = datePurchased;
-    }
-
     public Customer getOwner() {
-        return Owner;
+        return owner;
     }
 
     public void setOwner(Customer owner) {
-        Owner = owner;
+        this.owner = owner;
+    }
+
+    public Purchase getPurchaseDetails() {
+        return purchaseDetails;
+    }
+
+    public void setPurchaseDetails(Purchase purchaseDetails) {
+        this.purchaseDetails = purchaseDetails;
     }
 }
