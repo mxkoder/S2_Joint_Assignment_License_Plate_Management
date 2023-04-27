@@ -15,6 +15,7 @@ public class Customer implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerId;
 
+    private String title;
     @NotEmpty(message = "Vehicle owner first name cannot be empty")
     @Size(min = 1, max = 1000, message
             = "First name must be between 1 and 1000 characters")
