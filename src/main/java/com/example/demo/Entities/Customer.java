@@ -42,19 +42,20 @@ public class Customer implements java.io.Serializable {
     @Column(unique = true)
     @NotEmpty(message = "Vehicle owner driving licence cannot be empty")
     @Size(min=16, max=16, message = "UK driving licence must 16 characters long.")
-    private String drivingLicenceNumber;
+    private String drivingLicenseNumber;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Owner")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     private List<LicensePlate> licensePlatesOwned;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Owner")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Purchase> purchases;
 
     public Customer() {
 
     }
 
-    public Customer(String firstName, String surname, LocalDate dob, String address, String postCode, String phoneNumber, String email, String drivingLicenceNumber) {
+    public Customer(String title, String firstName, String surname, LocalDate dob, String address, String postCode, String phoneNumber, String email, String drivingLicenseNumber) {
+        this.title = title;
         this.firstName = firstName;
         this.surname = surname;
         this.dob = dob;
@@ -62,7 +63,7 @@ public class Customer implements java.io.Serializable {
         this.postCode = postCode;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.drivingLicenceNumber = drivingLicenceNumber;
+        this.drivingLicenseNumber = drivingLicenseNumber;
     }
 
     public Integer getCustomerId() {
@@ -71,6 +72,14 @@ public class Customer implements java.io.Serializable {
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getFirstName() {
@@ -129,12 +138,12 @@ public class Customer implements java.io.Serializable {
         this.email = email;
     }
 
-    public String getDrivingLicenceNumber() {
-        return drivingLicenceNumber;
+    public String getDrivingLicenseNumber() {
+        return drivingLicenseNumber;
     }
 
-    public void setDrivingLicenceNumber(String drivingLicenceNumber) {
-        this.drivingLicenceNumber = drivingLicenceNumber;
+    public void setDrivingLicenseNumber(String drivingLicenseNumber) {
+        this.drivingLicenseNumber = drivingLicenseNumber;
     }
 
     public List<LicensePlate> getLicensePlatesOwned() {

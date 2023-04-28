@@ -2,6 +2,8 @@ package com.example.demo.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,8 +20,10 @@ public class PaymentDetails implements java.io.Serializable{
 
     private String cardHolderName;
 
+    @Size(min = 16, max = 16, message = "Card number must be 16 digits long, with no spaces.")
     private String cardNumber;
 
+    @Future(message = "The card expiration date must be in the future.")
     private LocalDate expirationDate;
 
     private Boolean paymentMethodIsValid;
@@ -42,6 +46,8 @@ public class PaymentDetails implements java.io.Serializable{
         this.cardHolderName = cardHolderName;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
+
+        //todo write method / way to set is valid
         this.paymentMethodIsValid = paymentMethodIsValid;
     }
 
@@ -74,7 +80,8 @@ public class PaymentDetails implements java.io.Serializable{
     }
 
     public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+        String editedCardNumber = cardNumber.substring(11, cardNumber.length());
+        this.cardNumber = editedCardNumber;
     }
 
     public LocalDate getExpirationDate() {

@@ -23,7 +23,7 @@ public class Purchase implements java.io.Serializable {
     private Customer customer;
 
     //todo - or - attach payment option to customer?
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = LicensePlate.class)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paymentDetails")
     @NotNull(message= "Payment details must be entered for a valid purchase.")
     private PaymentDetails paymentDetails;
@@ -84,8 +84,17 @@ public class Purchase implements java.io.Serializable {
         return purchaseIsCompleted;
     }
 
+    /**
+     * PurchaseIsCompleted will be set to false if the payment details are nto valid
+     * @param purchaseIsCompleted
+     */
     public void setPurchaseIsCompleted(Boolean purchaseIsCompleted) {
-        this.purchaseIsCompleted = purchaseIsCompleted;
+        if(this.paymentDetails.getPaymentMethodIsValid()) {
+            this.purchaseIsCompleted = true;
+        }
+        else {
+            this.purchaseIsCompleted = false;
+        }
     }
 
     public LocalDate getPurchaseDate() {
@@ -100,7 +109,11 @@ public class Purchase implements java.io.Serializable {
         return amountPaid;
     }
 
-    public void setAmountPaid(Double amountPaid) {
-        this.amountPaid = amountPaid;
+    /**
+     * amountPaid is set using the price details in License Plate
+     */
+    public void setAmountPaid() {
+        Double amountToPay = this.licensePlate.getPriceIncludingVatAndDvlaAssignmentFee();
+        this.amountPaid = amountToPay;
     }
 }

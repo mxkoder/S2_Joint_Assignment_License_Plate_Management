@@ -3,7 +3,6 @@ package com.example.demo.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
@@ -57,8 +56,8 @@ public class Vehicle implements java.io.Serializable{
 
     }
 
-    public Vehicle(Integer vehicleId, String VIN, String make, String colour, LocalDate dateOfFirstRegistration) {
-        this.vehicleId = vehicleId;
+    public Vehicle(String licensePlateNumber, String VIN, String make, String colour, LocalDate dateOfFirstRegistration) {
+        this.licensePlateNumber = licensePlateNumber;
         this.VIN = VIN;
         this.make = make;
         this.colour = colour;
@@ -73,12 +72,20 @@ public class Vehicle implements java.io.Serializable{
         this.vehicleId = vehicleId;
     }
 
+    public String getLicensePlateNumber() {
+        return licensePlateNumber;
+    }
+
+    public void setLicensePlateNumber(String licensePlateNumber) {
+        this.licensePlateNumber = licensePlateNumber;
+    }
+
     public String getVIN() {
         return VIN;
     }
 
     public void setVIN(String VIN) {
-        this.VIN = VIN;
+        this.VIN = VIN.toUpperCase();
     }
 
     public String getMake() {

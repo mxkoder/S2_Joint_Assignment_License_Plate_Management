@@ -1,5 +1,6 @@
 package com.example.demo.Entities;
 
+import com.example.demo.Exceptions.LicensePlateNotCompatibleWithVehicleException;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,11 +16,11 @@ public class RegistrationAssignment implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer registrationAssignmentId;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = LicensePlate.class, mappedBy = "vehicleAssignment")
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = LicensePlate.class)
     @NotNull(message="License Plate cannot be left empty")
     private LicensePlate licensePlate;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Vehicle.class, mappedBy = "vehicleAssignment")
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Vehicle.class)
     @NotNull(message="Vehicle the licence plate is to be assigned to cannot be left empty")
     private Vehicle vehicle;
 
@@ -66,8 +67,24 @@ public class RegistrationAssignment implements java.io.Serializable {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    //todo flesh out comment
+    /**
+     * Setting a Vehicle will assign the registration number of the license plate to the vehicle
+     * @param vehicle
+     */
+    public void setVehicle(Vehicle vehicle) throws LicensePlateNotCompatibleWithVehicleException {
+
+
+        //todo add note
+        if(vehicle.getDateOfFirstRegistration().isAfter(this.licensePlate.getEarliestPossibleFirstRegistrationOfVehicle())) {
+            this.vehicle = vehicle;
+            this.vehicle.setLicensePlateNumber(this.licensePlate.getLicensePlateNumber());
+        }
+        else {
+            throw new LicensePlateNotCompatibleWithVehicleException("Error: the date of First Registration of the vehicle needs to be after the earliest possible registration date of the License Plate.");
+        }
+
+
     }
 
     public String getV5cLogbookReferenceNumber() {

@@ -40,7 +40,7 @@ public class LicensePlate implements java.io.Serializable {
     @JoinColumn(name = "Owner")
     private Customer owner;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Purchase.class, mappedBy = "licensePlate")
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Purchase.class)
     private Purchase purchaseDetails;
 
     public LicensePlate() {
