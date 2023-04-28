@@ -19,12 +19,13 @@ public class Purchase implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer")
+    @NotNull(message= "A customer must be entered for a valid purchase.")
     private Customer customer;
 
     //todo - or - attach payment option to customer?
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = LicensePlate.class)
     @JoinColumn(name = "paymentDetails")
-    //todo - may be not null?
+    @NotNull(message= "Payment details must be entered for a valid purchase.")
     private PaymentDetails paymentDetails;
 
     private Boolean purchaseIsCompleted;

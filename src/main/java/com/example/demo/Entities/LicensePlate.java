@@ -19,7 +19,11 @@ public class LicensePlate implements java.io.Serializable {
     @Column(unique = true)
     private String licensePlateNumber;
 
-    // DVLA assignment fee is 80
+    /**
+     * The price of a licence fee includes a DVLA assignment fee of £80
+     * <p>As shown in https://dvlaregistrations.dvla.gov.uk/ , the £80 DVLA assignment fee is applied at the point of purchase of the license plate and
+     * is included in the license plate price</p>
+     */
     @NotNull(message = "License plate price needs to be included.")
     private Double priceIncludingVatAndDvlaAssignmentFee;
 
