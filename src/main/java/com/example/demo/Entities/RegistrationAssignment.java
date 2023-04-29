@@ -35,16 +35,22 @@ public class RegistrationAssignment implements java.io.Serializable {
 
     private LocalDate dateLicenseAssignedToVehicle;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer")
+    @NotNull(message= "A customer must be entered to assign a registration plate to a vehicle.")
+    private Customer customer;
+
     public RegistrationAssignment() {
 
     }
 
-    public RegistrationAssignment(Integer registrationAssignmentId, LicensePlate licensePlate, Vehicle vehicle, String v5cLogbookReferenceNumber, LocalDate dateLicenseAssignedToVehicle) {
+    public RegistrationAssignment(Integer registrationAssignmentId, LicensePlate licensePlate, Vehicle vehicle, String v5cLogbookReferenceNumber, LocalDate dateLicenseAssignedToVehicle, Customer customer) {
         this.registrationAssignmentId = registrationAssignmentId;
         this.licensePlate = licensePlate;
         this.vehicle = vehicle;
         this.v5cLogbookReferenceNumber = v5cLogbookReferenceNumber;
         this.dateLicenseAssignedToVehicle = dateLicenseAssignedToVehicle;
+        this.customer = customer;
     }
 
     public Integer getRegistrationAssignmentId() {
@@ -101,5 +107,13 @@ public class RegistrationAssignment implements java.io.Serializable {
 
     public void setDateLicenseAssignedToVehicle(LocalDate dateLicenseAssignedToVehicle) {
         this.dateLicenseAssignedToVehicle = dateLicenseAssignedToVehicle;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.Entities;
 
+import com.example.demo.Exceptions.PurchaseCouldNotBeCompleted;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -88,12 +89,15 @@ public class Purchase implements java.io.Serializable {
      * PurchaseIsCompleted will be set to false if the payment details are nto valid
      * @param purchaseIsCompleted
      */
-    public void setPurchaseIsCompleted(Boolean purchaseIsCompleted) {
-        if(this.paymentDetails.getPaymentMethodIsValid()) {
+    public void setPurchaseIsCompleted(Boolean purchaseIsCompleted) throws PurchaseCouldNotBeCompleted {
+        if(this.paymentDetails.getPaymentMethodIsValid() && this.licensePlate.getAvailable()) {
             this.purchaseIsCompleted = true;
+            this.licensePlate.setOwner(this.customer);
+            this.licensePlate.setAvailable(false);
         }
         else {
             this.purchaseIsCompleted = false;
+            throw new PurchaseCouldNotBeCompleted("The purchase could not be completed. Please check that the license plate is available and the payment details are valid.");
         }
     }
 
@@ -112,8 +116,14 @@ public class Purchase implements java.io.Serializable {
     /**
      * amountPaid is set using the price details in License Plate
      */
-    public void setAmountPaid() {
-        Double amountToPay = this.licensePlate.getPriceIncludingVatAndDvlaAssignmentFee();
-        this.amountPaid = amountToPay;
+    public void setAmountPaid(Double amountPaid) {
+        if(amountPaid == -1) {
+            Double amountToPay = this.licensePlate.getPriceIncludingVatAndDvlaAssignmentFee();
+            this.amountPaid = amountToPay;
+        }
+        else {
+            this.amountPaid = amountPaid;
+        }
+
     }
 }

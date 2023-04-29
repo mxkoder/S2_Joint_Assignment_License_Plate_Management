@@ -1,9 +1,9 @@
 package com.example.demo.Entities;
 
+import com.example.demo.Exceptions.CardNumberLengthNot16Digits;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,7 +20,9 @@ public class PaymentDetails implements java.io.Serializable{
 
     private String cardHolderName;
 
-    @Size(min = 16, max = 16, message = "Card number must be 16 digits long, with no spaces.")
+    //todo -  remove or find out why not working
+//    @Size(min = 12, max = 30, message
+//            = "Card number must be between 12 and 30 digits long, with no spaces.")
     private String cardNumber;
 
     @Future(message = "The card expiration date must be in the future.")
@@ -79,9 +81,15 @@ public class PaymentDetails implements java.io.Serializable{
         return cardNumber;
     }
 
-    public void setCardNumber(String cardNumber) {
-        String editedCardNumber = cardNumber.substring(11, cardNumber.length());
-        this.cardNumber = editedCardNumber;
+    public void setCardNumber (String cardNumber) throws CardNumberLengthNot16Digits {
+        if(cardNumber.length() == 16) {
+            String editedCardNumber = cardNumber.substring(12, cardNumber.length());
+            this.cardNumber = editedCardNumber;
+        }
+        else {
+            throw new CardNumberLengthNot16Digits("Card number should be 16 digits long");
+        }
+
     }
 
     public LocalDate getExpirationDate() {

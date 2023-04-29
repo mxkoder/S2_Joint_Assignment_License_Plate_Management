@@ -50,6 +50,9 @@ public class Customer implements java.io.Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Purchase> purchases;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<RegistrationAssignment> registrationAssignments;
+
     public Customer() {
 
     }

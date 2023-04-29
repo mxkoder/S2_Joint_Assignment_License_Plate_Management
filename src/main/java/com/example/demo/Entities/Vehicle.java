@@ -22,7 +22,6 @@ public class Vehicle implements java.io.Serializable{
 //    @OneToOne(fetch = FetchType.LAZY, targetEntity = LicensePlate.class, mappedBy = "vehicleDetails")
     //private LicensePlate ;
 
-    @NotNull(message = "License plate number cannot be null")
     @Column(unique = true)
     private String licensePlateNumber;
 
