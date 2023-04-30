@@ -15,21 +15,24 @@ public class Customer implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerId;
 
+    @Size(max = 30, message = "Number of characters for 'title' exceeded.")
     private String title;
     @NotEmpty(message = "Vehicle owner first name cannot be empty")
-    @Size(min = 1, max = 1000, message
-            = "First name must be between 1 and 1000 characters")
+    @Size(min = 1, max = 1000, message = "First name must be between 1 and 1000 characters")
     private String firstName;
 
-    @Size(min = 1, max = 1000, message
-            = "Surname must be between 1 and 1000 characters")
+    @Size(min = 1, max = 1000, message = "Surname must be between 1 and 1000 characters")
     private String surname;
 
     @NotNull(message = "Vehicle owner date of birth cannot be null")
     @Past
     private LocalDate dob;
+
+    @Size(min = 1, max = 200, message = "Number of characters for 'address' exceeded.")
     private String address;
 
+    @Size(min = 1, max = 200, message = "Number of characters for 'address' exceeded.")
+    @NotNull(message = "Post code cannot be left blank.")
     private String postCode;
 
     @Size(min = 1, max = 15, message
@@ -46,6 +49,9 @@ public class Customer implements java.io.Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     private List<LicensePlate> licensePlatesOwned;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<PaymentDetails> paymentDetails;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Purchase> purchases;
@@ -163,5 +169,13 @@ public class Customer implements java.io.Serializable {
 
     public void setPurchases(List<Purchase> purchases) {
         this.purchases = purchases;
+    }
+
+    public List<RegistrationAssignment> getRegistrationAssignments() {
+        return registrationAssignments;
+    }
+
+    public void setRegistrationAssignments(List<RegistrationAssignment> registrationAssignments) {
+        this.registrationAssignments = registrationAssignments;
     }
 }

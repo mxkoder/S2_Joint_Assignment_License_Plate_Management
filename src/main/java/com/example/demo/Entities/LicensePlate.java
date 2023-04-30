@@ -2,8 +2,7 @@ package com.example.demo.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -17,6 +16,7 @@ public class LicensePlate implements java.io.Serializable {
 
     @NotNull(message = "License plate number cannot be null")
     @Column(unique = true)
+    @Size(min= 1, max = 8, message = "License plates must be between 1 and 8 characters long.")
     private String licensePlateNumber;
 
     /**
@@ -25,17 +25,16 @@ public class LicensePlate implements java.io.Serializable {
      * is included in the license plate price</p>
      */
     @NotNull(message = "License plate price needs to be included.")
+    @Min(value = 0, message = "License plate price should not be less than 0.")
+    @Max(value = 5000000, message = "License plate price should not be less than £5,000,000.")
     private Double priceIncludingVatAndDvlaAssignmentFee;
 
     @NotNull(message = "License plate availability cannot be null.")
     private Boolean available;
 
-    //TODO optional can include date associated with licence plate as a separate field
     @PastOrPresent
     private LocalDate earliestPossibleFirstRegistrationOfVehicle;
 
-    //todo - delete attribute if not work
-    // Owner attrubute will be assigned if the license plate is purchase, and will be blank otherwise
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Owner")
     private Customer owner;

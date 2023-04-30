@@ -18,10 +18,6 @@ public class Vehicle implements java.io.Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer vehicleId;
 
-    // todo get via assign reg
-//    @OneToOne(fetch = FetchType.LAZY, targetEntity = LicensePlate.class, mappedBy = "vehicleDetails")
-    //private LicensePlate ;
-
     @Column(unique = true)
     private String licensePlateNumber;
 
@@ -30,26 +26,14 @@ public class Vehicle implements java.io.Serializable{
     @Size(min=17, max=17, message = "The Vehicle Identification Number (VIN) must be 17 characters long.")
     private String VIN;
 
+    @Size(min=1, max=30, message = "Please enter the make of the vehicle.")
     private String make;
 
+    @Size(min=1, max=30, message = "Please enter the colour of the vehicle.")
     private String colour;
 
     @PastOrPresent
     private LocalDate dateOfFirstRegistration;
-
-//    @Past
-//    private LocalDate yearOfManufacture;
-
-//    private Double cylinderCapacity;
-//
-//    private Double co2Emissions;
-//
-//    private String fuelType;
-
-//    private Boolean taxed;
-
-//    private String wheelplan;
-
 
     public Vehicle () {
 

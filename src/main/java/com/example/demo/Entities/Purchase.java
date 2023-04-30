@@ -3,6 +3,7 @@ package com.example.demo.Entities;
 import com.example.demo.Exceptions.PurchaseCouldNotBeCompleted;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -23,7 +24,6 @@ public class Purchase implements java.io.Serializable {
     @NotNull(message= "A customer must be entered for a valid purchase.")
     private Customer customer;
 
-    //todo - or - attach payment option to customer?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paymentDetails")
     @NotNull(message= "Payment details must be entered for a valid purchase.")
@@ -33,6 +33,7 @@ public class Purchase implements java.io.Serializable {
 
     private LocalDate purchaseDate;
 
+    @Max(value = 5000000, message = "The amount paid cannot be more than £5,000,000.")
     private Double amountPaid;
 
     public Purchase() {

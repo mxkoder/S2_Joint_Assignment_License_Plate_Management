@@ -4,6 +4,9 @@ import com.example.demo.Exceptions.CardNumberLengthNot16Digits;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,13 +19,15 @@ public class PaymentDetails implements java.io.Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paymentDetailsId;
 
+    @Size(min= 0, max= 20, message = "Payment type cannot be longer than 20 characters")
     private String paymentType;
 
+    @Size(min= 0, max= 20, message = "Payment type cannot be longer than 1000 characters")
+    @NotEmpty(message = "Cardholder name cannot be left blank.")
     private String cardHolderName;
 
     //todo -  remove or find out why not working
-//    @Size(min = 12, max = 30, message
-//            = "Card number must be between 12 and 30 digits long, with no spaces.")
+    @Size(min = 16, max = 16, message = "Card number must be between 12 and 30 digits long, with no spaces.")
     private String cardNumber;
 
     @Future(message = "The card expiration date must be in the future.")
@@ -30,11 +35,6 @@ public class PaymentDetails implements java.io.Serializable{
 
     private Boolean paymentMethodIsValid;
 
-
-    //todo - in set card number - chop last 4 digits and only store those!
-    // have card number & last 4 dig of card num as sep fields
-
-    // purchase has customer, so don't need to separately add customer
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "paymentDetails")
     private List<Purchase> purchases;
 
@@ -107,6 +107,11 @@ public class PaymentDetails implements java.io.Serializable{
     public void setPaymentMethodIsValid(Boolean paymentMethodIsValid) {
         this.paymentMethodIsValid = paymentMethodIsValid;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer")
+    @NotNull(message= "A customer must be entered for valid payment details.")
+    private Customer customer;
 
     public List<Purchase> getPurchases() {
         return purchases;
