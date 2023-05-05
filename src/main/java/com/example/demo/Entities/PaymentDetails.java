@@ -19,21 +19,25 @@ public class PaymentDetails implements java.io.Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paymentDetailsId;
 
-    @Size(min= 0, max= 20, message = "Payment type cannot be longer than 20 characters")
+    @Size(max= 20, message = "Payment type cannot be longer than 20 characters")
     private String paymentType;
 
     @Size(min= 0, max= 20, message = "Payment type cannot be longer than 1000 characters")
     @NotEmpty(message = "Cardholder name cannot be left blank.")
     private String cardHolderName;
 
-    //todo -  remove or find out why not working
-    @Size(min = 16, max = 16, message = "Card number must be between 12 and 30 digits long, with no spaces.")
+    @NotNull(message = "Card number cannot be null.")
     private String cardNumber;
 
     @Future(message = "The card expiration date must be in the future.")
     private LocalDate expirationDate;
 
     private Boolean paymentMethodIsValid;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer")
+    @NotNull(message= "A customer must be entered for valid payment details.")
+    private Customer customer;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "paymentDetails")
     private List<Purchase> purchases;
@@ -42,15 +46,14 @@ public class PaymentDetails implements java.io.Serializable{
 
     }
 
-    public PaymentDetails(Integer paymentDetailsId, String paymentType, String cardHolderName, String cardNumber, LocalDate expirationDate, Boolean paymentMethodIsValid) {
+    public PaymentDetails(Integer paymentDetailsId, String paymentType, String cardHolderName, String cardNumber, LocalDate expirationDate, Boolean paymentMethodIsValid, Customer customer) {
         this.paymentDetailsId = paymentDetailsId;
         this.paymentType = paymentType;
         this.cardHolderName = cardHolderName;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
-
-        //todo write method / way to set is valid
         this.paymentMethodIsValid = paymentMethodIsValid;
+        this.customer = customer;
     }
 
     public Integer getPaymentDetailsId() {
@@ -108,10 +111,13 @@ public class PaymentDetails implements java.io.Serializable{
         this.paymentMethodIsValid = paymentMethodIsValid;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer")
-    @NotNull(message= "A customer must be entered for valid payment details.")
-    private Customer customer;
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public List<Purchase> getPurchases() {
         return purchases;

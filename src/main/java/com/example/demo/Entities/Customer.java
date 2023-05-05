@@ -18,33 +18,33 @@ public class Customer implements java.io.Serializable {
     @Size(max = 30, message = "Number of characters for 'title' exceeded.")
     private String title;
     @NotEmpty(message = "Vehicle owner first name cannot be empty")
-    @Size(min = 1, max = 1000, message = "First name must be between 1 and 1000 characters")
+    @Size(max = 1000, message = "First name cannot exceed 1000 characters")
     private String firstName;
 
-    @Size(min = 1, max = 1000, message = "Surname must be between 1 and 1000 characters")
+    @Size(max = 1000, message = "Surname cannot exceed 1000 characters")
     private String surname;
 
-    @NotNull(message = "Vehicle owner date of birth cannot be null")
     @Past
     private LocalDate dob;
 
-    @Size(min = 1, max = 200, message = "Number of characters for 'address' exceeded.")
+    @Size(max = 200, message = "Number of characters for 'address' exceeded.")
     private String address;
 
-    @Size(min = 1, max = 200, message = "Number of characters for 'address' exceeded.")
+    @Size(min = 1, max = 200, message = "Number of characters for 'postcode' exceeded.")
     @NotNull(message = "Post code cannot be left blank.")
     private String postCode;
 
-    @Size(min = 1, max = 15, message
-            = "Phone number must be between 1 and 15 digits")
+    @Size(max = 15, message
+            = "Phone number must be minimum 15 digits")
     private String phoneNumber;
 
     @Email
     private String email;
 
+    //todo - dln - write exception?
     @Column(unique = true)
     @NotEmpty(message = "Vehicle owner driving licence cannot be empty")
-    @Size(min=16, max=16, message = "UK driving licence must 16 characters long.")
+//    @Size(min=16, max=16, message = "UK driving licence must 16 characters long.")
     private String drivingLicenseNumber;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
