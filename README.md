@@ -131,6 +131,9 @@ In addition:
 - incorporating license plate types other than the UK standard implemented in 2001.
 - adding checks in the setLicensePlate method to ensure that a license plate meets the format requirements.
 - Implement pagination of the license plate search results in the client and web service.
+- Improved compatability between direct inserts into the database and post requests via the web service. 
+(Currently the auto generated ids in the web service don't take into account any records inserted via insert scripts directly into the database,
+which would cause conflicts.)
 
 ## Author
 
