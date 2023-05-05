@@ -26,6 +26,10 @@ public class PaymentDetails implements java.io.Serializable{
     @NotEmpty(message = "Cardholder name cannot be left blank.")
     private String cardHolderName;
 
+    /**
+     * Card number should be 16 digits long. An exception will be thrown from the setCardNumber method
+     * if this requirement is not met.
+     */
     @NotNull(message = "Card number cannot be null.")
     private String cardNumber;
 

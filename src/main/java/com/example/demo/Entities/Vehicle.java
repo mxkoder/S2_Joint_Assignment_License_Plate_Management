@@ -12,8 +12,6 @@ import java.time.LocalDate;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Vehicle implements java.io.Serializable{
 
-    //todo reduce fields if too many
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer vehicleId;

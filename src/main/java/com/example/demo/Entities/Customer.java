@@ -41,7 +41,6 @@ public class Customer implements java.io.Serializable {
     @Email
     private String email;
 
-    //todo - dln - write exception?
     @Column(unique = true)
     @NotEmpty(message = "Vehicle owner driving licence cannot be empty")
 //    @Size(min=16, max=16, message = "UK driving licence must 16 characters long.")

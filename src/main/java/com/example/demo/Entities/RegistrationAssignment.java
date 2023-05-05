@@ -26,7 +26,7 @@ public class RegistrationAssignment implements java.io.Serializable {
 
     /**
      * V5C registration certificate (logbook) document reference number
-     * <p>As explained in https://www.personalisedvehicleregistration.service.gov.uk/assign/vehicle-lookup , an 11 digit V5C registration certificate refrence is needed
+     * <p>As explained in https://www.personalisedvehicleregistration.service.gov.uk/assign/vehicle-lookup , an 11 digit V5C registration certificate reference is needed
      * assigning a registration number to a vehicle</p>
      */
 //    @NotNull(message = "A V5C logbook document reference number must be supplied to assign a registration number to a vehicle")
@@ -73,16 +73,16 @@ public class RegistrationAssignment implements java.io.Serializable {
         return vehicle;
     }
 
-    //todo flesh out comment
+
     /**
      * Setting a Vehicle will assign the registration number of the license plate to the vehicle
+     * A check is made that the date of first registration of the vehicle is compatible with the license plate,
+     * and that the license plate to be assigned is owned by the customer
      * @param vehicle
      */
     public void setVehicle(Vehicle vehicle) throws LicensePlateNotCompatibleWithVehicleException {
 
-
-        //todo add note
-        //todo - refactor line to make clearer?
+        // The earliest possible first registration date associated with the license plate needs to be before the date of first registration of the vehicle
         if(vehicle.getDateOfFirstRegistration().isAfter(this.licensePlate.getEarliestPossibleFirstRegistrationOfVehicle())) {
             if(this.customer.equals(this.licensePlate.getOwner())) {
                 this.vehicle = vehicle;
@@ -96,17 +96,6 @@ public class RegistrationAssignment implements java.io.Serializable {
         else {
             throw new LicensePlateNotCompatibleWithVehicleException("Error: the date of First Registration of the vehicle needs to be after the earliest possible registration date of the License Plate.");
         }
-
-        // todo delete and go with above, just a test
-//        if(this.customer.equals(this.licensePlate.getOwner())) {
-//            this.vehicle = vehicle;
-//            this.vehicle.setLicensePlateNumber(this.licensePlate.getLicensePlateNumber());
-//        }
-//        else {
-//            throw new LicensePlateNotCompatibleWithVehicleException("Error: The customer needs to own the license plate in order to be able to assign it to a vehicle.");
-//        }
-
-
     }
 
     public String getV5cLogbookReferenceNumber() {

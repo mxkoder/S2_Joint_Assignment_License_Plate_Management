@@ -87,7 +87,7 @@ public class Purchase implements java.io.Serializable {
     }
 
     /**
-     * PurchaseIsCompleted will be set to false if the payment details are nto valid
+     * PurchaseIsCompleted will be set to false if the payment details are not valid
      * @param purchaseIsCompleted
      */
     public void setPurchaseIsCompleted(Boolean purchaseIsCompleted) throws PurchaseCouldNotBeCompleted {
