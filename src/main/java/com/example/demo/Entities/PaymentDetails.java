@@ -13,16 +13,16 @@ import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class PaymentDetails implements java.io.Serializable{
+public class PaymentDetails implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paymentDetailsId;
 
-    @Size(max= 20, message = "Payment type cannot be longer than 20 characters")
+    @Size(max = 20, message = "Payment type cannot be longer than 20 characters")
     private String paymentType;
 
-    @Size(min= 0, max= 20, message = "Payment type cannot be longer than 1000 characters")
+    @Size(min = 0, max = 20, message = "Payment type cannot be longer than 1000 characters")
     @NotEmpty(message = "Cardholder name cannot be left blank.")
     private String cardHolderName;
 
@@ -40,7 +40,7 @@ public class PaymentDetails implements java.io.Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer")
-    @NotNull(message= "A customer must be entered for valid payment details.")
+    @NotNull(message = "A customer must be entered for valid payment details.")
     private Customer customer;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "paymentDetails")
@@ -88,12 +88,11 @@ public class PaymentDetails implements java.io.Serializable{
         return cardNumber;
     }
 
-    public void setCardNumber (String cardNumber) throws CardNumberLengthNot16Digits {
-        if(cardNumber.length() == 16) {
+    public void setCardNumber(String cardNumber) throws CardNumberLengthNot16Digits {
+        if (cardNumber.length() == 16) {
             String editedCardNumber = cardNumber.substring(12, cardNumber.length());
             this.cardNumber = editedCardNumber;
-        }
-        else {
+        } else {
             throw new CardNumberLengthNot16Digits("Card number should be 16 digits long");
         }
 

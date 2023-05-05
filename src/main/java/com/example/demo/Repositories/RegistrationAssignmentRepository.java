@@ -6,6 +6,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "registrationassignment", path = "registrationassignment")
-@CrossOrigin(allowedHeaders="*")
+@CrossOrigin(allowedHeaders = "*")
 public interface RegistrationAssignmentRepository extends CrudRepository<RegistrationAssignment, Integer> {
 }

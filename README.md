@@ -5,7 +5,7 @@ This is a web service to support a customer facing application to search, buy an
 
 ## Dependencies
 The project uses the Spring Boot framework with Data JPA, linking to postgresql database
-Hibernate Validator] (https://hibernate.org/validator/documentation/getting-started/) has been added as a dependency to provide constraints and validation for data inputs.
+[Hibernate Validator] (https://hibernate.org/validator/documentation/getting-started/) has been added as a dependency to provide constraints and validation for data inputs.
 
 ## Running the project
 The project runs from:

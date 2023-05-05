@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "customer", path = "customer")
-@CrossOrigin(allowedHeaders="*")
+@CrossOrigin(allowedHeaders = "*")
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 }

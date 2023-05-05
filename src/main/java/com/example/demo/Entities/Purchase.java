@@ -21,12 +21,12 @@ public class Purchase implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer")
-    @NotNull(message= "A customer must be entered for a valid purchase.")
+    @NotNull(message = "A customer must be entered for a valid purchase.")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paymentDetails")
-    @NotNull(message= "Payment details must be entered for a valid purchase.")
+    @NotNull(message = "Payment details must be entered for a valid purchase.")
     private PaymentDetails paymentDetails;
 
     private Boolean purchaseIsCompleted;
@@ -88,15 +88,15 @@ public class Purchase implements java.io.Serializable {
 
     /**
      * PurchaseIsCompleted will be set to false if the payment details are not valid
+     *
      * @param purchaseIsCompleted
      */
     public void setPurchaseIsCompleted(Boolean purchaseIsCompleted) throws PurchaseCouldNotBeCompleted {
-        if(this.paymentDetails.getPaymentMethodIsValid() && this.licensePlate.getAvailable()) {
+        if (this.paymentDetails.getPaymentMethodIsValid() && this.licensePlate.getAvailable()) {
             this.purchaseIsCompleted = true;
             this.licensePlate.setOwner(this.customer);
             this.licensePlate.setAvailable(false);
-        }
-        else {
+        } else {
             this.purchaseIsCompleted = false;
             throw new PurchaseCouldNotBeCompleted("The purchase could not be completed. Please check that the license plate is available and the payment details are valid.");
         }
@@ -118,11 +118,10 @@ public class Purchase implements java.io.Serializable {
      * If '-1' is entered in the amountPaid field, amountPaid is set using the price details in LicensePlate entity
      */
     public void setAmountPaid(Double amountPaid) {
-        if(amountPaid == -1) {
+        if (amountPaid == -1) {
             Double amountToPay = this.licensePlate.getPriceIncludingVatAndDvlaAssignmentFee();
             this.amountPaid = amountToPay;
-        }
-        else {
+        } else {
             this.amountPaid = amountPaid;
         }
 

@@ -6,6 +6,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "paymentdetails", path = "paymentdetails")
-@CrossOrigin(allowedHeaders="*")
+@CrossOrigin(allowedHeaders = "*")
 public interface PaymentDetailsRepository extends CrudRepository<PaymentDetails, Integer> {
 }

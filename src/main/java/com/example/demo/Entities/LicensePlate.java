@@ -16,7 +16,7 @@ public class LicensePlate implements java.io.Serializable {
 
     @NotNull(message = "License plate number cannot be null")
     @Column(unique = true)
-    @Size(min= 1, max = 8, message = "License plates must be between 1 and 8 characters long.")
+    @Size(min = 1, max = 8, message = "License plates must be between 1 and 8 characters long.")
     private String licensePlateNumber;
 
     /**

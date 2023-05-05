@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Vehicle implements java.io.Serializable{
+public class Vehicle implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,19 +21,19 @@ public class Vehicle implements java.io.Serializable{
 
     // Vehicle Identification Number - a 17 character DVLA unique identifier for each vehicle
     @Column(unique = true)
-    @Size(min=17, max=17, message = "The Vehicle Identification Number (VIN) must be 17 characters long.")
+    @Size(min = 17, max = 17, message = "The Vehicle Identification Number (VIN) must be 17 characters long.")
     private String VIN;
 
-    @Size(min=1, max=30, message = "Please enter the make of the vehicle.")
+    @Size(min = 1, max = 30, message = "Please enter the make of the vehicle.")
     private String make;
 
-    @Size(min=1, max=30, message = "Please enter the colour of the vehicle.")
+    @Size(min = 1, max = 30, message = "Please enter the colour of the vehicle.")
     private String colour;
 
     @PastOrPresent
     private LocalDate dateOfFirstRegistration;
 
-    public Vehicle () {
+    public Vehicle() {
 
     }
 
