@@ -27,9 +27,4 @@ public interface LicensePlateRepository extends CrudRepository<LicensePlate, Int
      * @return - returns a list of license plates matching the search terms.
      */
     List<LicensePlate> findByLicensePlateNumberContainingIgnoreCaseAndAvailable (@Param("lpn") String licensePlateNumberPartial, @Param("av") Boolean available);
-
-    //todo add search for partial license plate number
-    //todo - need to get partial parameter from UI, user input
-//    @Query("select l from LicensePlate l where l.licensePlateNumber like '%[user input]%'")
-//    List<LicensePlate> findLicensePlatePartialMatch();
 }

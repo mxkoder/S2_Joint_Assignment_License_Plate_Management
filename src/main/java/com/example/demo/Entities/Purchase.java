@@ -115,7 +115,7 @@ public class Purchase implements java.io.Serializable {
     }
 
     /**
-     * amountPaid is set using the price details in License Plate
+     * If '-1' is entered in the amountPaid field, amountPaid is set using the price details in LicensePlate entity
      */
     public void setAmountPaid(Double amountPaid) {
         if(amountPaid == -1) {
